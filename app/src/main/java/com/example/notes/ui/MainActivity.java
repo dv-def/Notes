@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.notes.R;
@@ -12,7 +13,8 @@ import com.example.notes.data.note.NoteRepository;
 import com.example.notes.data.note.Repository;
 import com.example.notes.data.note.adapter.NoteAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.OnClickNoteListener {
+    public static final String NOTE_EXTRA = "NOTE_EXTRA";
 
     private final Repository repository = new NoteRepository();
     private RecyclerView rvNotes;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         NoteAdapter adapter = new NoteAdapter();
         adapter.setNotes(repository.getAll());
+        adapter.setOnClickNoteListener(this);
 
         rvNotes = findViewById(R.id.rv_notes);
         rvNotes.setAdapter(adapter);
@@ -41,5 +44,12 @@ public class MainActivity extends AppCompatActivity {
         repository.create(new Note("Title 6", "Desc 6"));
         repository.create(new Note("Title 7", "Desc 7"));
         repository.create(new Note("Title 8", "Desc 8"));
+    }
+
+    @Override
+    public void onClickNote(Note note) {
+        Intent editIntent = new Intent(this, EditNoteActivity.class);
+        editIntent.putExtra(NOTE_EXTRA, note);
+        startActivity(editIntent);
     }
 }

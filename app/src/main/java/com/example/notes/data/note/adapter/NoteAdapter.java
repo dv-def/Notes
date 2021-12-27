@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     private final ArrayList<Note> notes = new ArrayList<>();
+    private OnClickNoteListener onClickNoteListener;
 
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(view, onClickNoteListener);
     }
 
     @Override
@@ -36,5 +37,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         this.notes.clear();
         this.notes.addAll(newNotes);
         notifyDataSetChanged();
+    }
+
+    public void setOnClickNoteListener(OnClickNoteListener onClickNoteListener) {
+        this.onClickNoteListener = onClickNoteListener;
+    }
+
+    public interface OnClickNoteListener {
+        void onClickNote(Note note);
     }
 }

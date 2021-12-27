@@ -12,14 +12,18 @@ import com.example.notes.data.note.Note;
 public class NoteViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvTitle;
     private final TextView tvDescription;
+    private Note note;
 
-    public NoteViewHolder(@NonNull View itemView) {
+    public NoteViewHolder(@NonNull View itemView, NoteAdapter.OnClickNoteListener onClickNoteListener) {
         super(itemView);
         tvTitle = itemView.findViewById(R.id.note_title);
         tvDescription = itemView.findViewById(R.id.note_description);
+        itemView.setOnClickListener(view -> onClickNoteListener.onClickNote(this.note));
     }
 
     public void bind(Note note) {
+        this.note = note;
+
         tvTitle.setText(note.getTitle());
         tvDescription.setText(note.getDescription());
     }
