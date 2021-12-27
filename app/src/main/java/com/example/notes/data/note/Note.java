@@ -1,4 +1,4 @@
-package com.example.notes.data;
+package com.example.notes.data.note;
 
 import java.util.Objects;
 

@@ -1,4 +1,6 @@
-package com.example.notes.data;
+package com.example.notes.data.note;
+
+import com.example.notes.data.note.Note;
 
 import java.util.ArrayList;
 
