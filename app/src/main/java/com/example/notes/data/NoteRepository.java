@@ -4,19 +4,14 @@ import java.util.ArrayList;
 
 public class NoteRepository implements Repository {
     private final ArrayList<Note> notes = new ArrayList<>();
+    private int counter;
 
     @Override
     public int create(Note note) {
-        int lastId;
-        if (notes.size() == 0) {
-            lastId = 0;
-        } else {
-            lastId = notes.get(notes.size() - 1).getId();
-        }
-
-        note.setId(lastId + 1);
+        int id = ++counter;
+        note.setId(id);
         notes.add(note);
-        return note.getId();
+        return id;
     }
 
     @Override
