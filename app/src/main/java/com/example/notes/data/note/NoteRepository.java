@@ -6,6 +6,18 @@ public class NoteRepository implements Repository {
     private final ArrayList<Note> notes = new ArrayList<>();
     private int counter;
 
+    private static NoteRepository instance;
+
+    public static NoteRepository getInstance() {
+        if (instance == null) {
+            instance = new NoteRepository();
+        }
+
+        return instance;
+    }
+
+    private NoteRepository(){}
+
     @Override
     public int create(Note note) {
         int id = ++counter;
