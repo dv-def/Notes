@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
@@ -40,8 +39,6 @@ public class EditNoteActivity extends AppCompatActivity {
 
         edTitle.getEditText().setText(note.getTitle());
         edDescription.getEditText().setText(note.getDescription());
-
-        Toast.makeText(this, "id: " + note.getId(), Toast.LENGTH_SHORT).show();
 
         btnSave.setOnClickListener(view -> {
             String title = edTitle.getEditText().getText().toString();
