@@ -28,8 +28,8 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
 
     @Override
     public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
         if (context instanceof NoteListController) {
+            super.onAttach(context);
             controller = (NoteListController) context;
         } else {
             throw new FragmentControllerException("Context must implement NoteListController");
