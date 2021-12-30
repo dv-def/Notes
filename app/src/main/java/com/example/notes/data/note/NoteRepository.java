@@ -16,7 +16,9 @@ public class NoteRepository implements Repository {
         return instance;
     }
 
-    private NoteRepository(){}
+    private NoteRepository(){
+        this.initTestNotes();
+    }
 
     @Override
     public int create(Note note) {
@@ -61,5 +63,16 @@ public class NoteRepository implements Repository {
     @Override
     public ArrayList<Note> getAll() {
         return notes;
+    }
+
+    private void initTestNotes() {
+        this.create(new Note("Title 1", "Desc 1"));
+        this.create(new Note("Title 2", "Desc 2"));
+        this.create(new Note("Title 3", "Desc 3"));
+        this.create(new Note("Title 4", "Desc 4"));
+        this.create(new Note("Title 5", "Desc 5"));
+        this.create(new Note("Title 6", "Desc 6"));
+        this.create(new Note("Title 7", "Desc 7"));
+        this.create(new Note("Title 8", "Desc 8"));
     }
 }
