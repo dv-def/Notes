@@ -53,10 +53,6 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
     @Override
     public void onNoteEdited() {
         initListNoteFragment();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            findViewById(R.id.main_activity_edit_note_fragment_host).setVisibility(View.GONE);
-            findViewById(R.id.main_activity_note_list_fragment_host).getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-        }
     }
 
     private void initListNoteFragment() {
