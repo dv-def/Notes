@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.EditNoteActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_title"
+        android:id="@+id/fragment_edit_note_ed_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:boxBackgroundColor="@color/white"
@@ -22,7 +20,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_description"
+        android:id="@+id/fragment_edit_note_ed_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:hint="@string/description"
@@ -40,7 +38,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save"
+        android:id="@+id/fragment_edit_note_btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"

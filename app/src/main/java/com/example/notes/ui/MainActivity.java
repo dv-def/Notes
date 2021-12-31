@@ -1,48 +1,32 @@
 package com.example.notes.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
-import com.example.notes.data.note.NoteRepository;
-import com.example.notes.data.note.Repository;
-import com.example.notes.data.note.adapter.NoteAdapter;
+import com.example.notes.ui.note.EditNoteFragment;
+import com.example.notes.ui.note.NoteListFragment;
 
-public class MainActivity extends AppCompatActivity implements NoteAdapter.OnClickNoteListener {
-    public static final String NOTE_EXTRA = "NOTE_EXTRA";
-
-    private final Repository repository = NoteRepository.getInstance();
-
-    private NoteAdapter adapter;
-    private RecyclerView rvNotes;
+public class MainActivity extends AppCompatActivity implements NoteListFragment.NoteListController, EditNoteFragment.EditNoteController {
+    public static String NOTE_EXTRA = "NOTE_EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initTestNotes();
-
-        adapter = new NoteAdapter();
-        adapter.setOnClickNoteListener(this);
-
-        rvNotes = findViewById(R.id.rv_notes);
-        rvNotes.setAdapter(adapter);
-        rvNotes.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.setNotes(repository.getAll());
+        initListNoteFragment();
     }
 
     @Override
@@ -54,27 +38,65 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnCli
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_add) {
-            Intent intent = new Intent(this, EditNoteActivity.class);
-            startActivity(intent);
+            initEditNoteFragment(null);
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     @Override
-    public void onClickNote(Note note) {
-        Intent editIntent = new Intent(this, EditNoteActivity.class);
-        editIntent.putExtra(NOTE_EXTRA, note);
-        startActivity(editIntent);
+    public void onNoteClicked(Note note) {
+        initEditNoteFragment(note);
     }
 
-    private void initTestNotes() {
-        repository.create(new Note("Title 1", "Desc 1"));
-        repository.create(new Note("Title 2", "Desc 2"));
-        repository.create(new Note("Title 3", "Desc 3"));
-        repository.create(new Note("Title 4", "Desc 4"));
-        repository.create(new Note("Title 5", "Desc 5"));
-        repository.create(new Note("Title 6", "Desc 6"));
-        repository.create(new Note("Title 7", "Desc 7"));
-        repository.create(new Note("Title 8", "Desc 8"));
+    @Override
+    public void onNoteEdited() {
+        initListNoteFragment();
+    }
+
+    private void initListNoteFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_note_list_fragment_host, new NoteListFragment())
+                .commit();
+    }
+
+    private void initEditNoteFragment(@Nullable Note note) {
+        EditNoteFragment fragment;
+        if (note != null) {
+            fragment = EditNoteFragment.getInstance(note);
+        } else {
+            fragment = new EditNoteFragment();
+        }
+
+        int containerId;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            FrameLayout noteEditLayout = findViewById(R.id.main_activity_edit_note_fragment_host);
+            noteEditLayout.setVisibility(View.VISIBLE);
+
+            FrameLayout noteListLayout = findViewById(R.id.main_activity_note_list_fragment_host);
+            noteListLayout.getLayoutParams().width = 0;
+
+            containerId = R.id.main_activity_edit_note_fragment_host;
+        } else {
+            containerId = R.id.main_activity_note_list_fragment_host;
+        }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerId, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.findFragmentById(R.id.main_activity_edit_note_fragment_host) == null) {
+            FrameLayout noteListLayout = findViewById(R.id.main_activity_note_list_fragment_host);
+            noteListLayout.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        }
     }
 }
