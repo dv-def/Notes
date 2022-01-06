@@ -32,6 +32,14 @@
             android:layout_marginTop="@dimen/description_margin"
             android:textSize="@dimen/note_description_text_size"/>
 
+        <TextView
+            android:id="@+id/note_important"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Important"
+            android:layout_marginTop="@dimen/note_item_margin"
+            android:textSize="@dimen/note_item_important_text_size"/>
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

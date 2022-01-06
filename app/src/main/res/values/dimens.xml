@@ -7,4 +7,5 @@
     <dimen name="note_item_margin">8dp</dimen>
     <dimen name="description_margin">4dp</dimen>
     <dimen name="edit_views_default_margin">8dp</dimen>
+    <dimen name="note_item_important_text_size">14sp</dimen>
 </resources>

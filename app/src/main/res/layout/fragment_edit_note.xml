@@ -37,6 +37,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Spinner
+        android:id="@+id/fragment_edit_note_spinner_important"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/important"
+        android:spinnerMode="dropdown" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_edit_note_btn_save"
         android:layout_width="wrap_content"

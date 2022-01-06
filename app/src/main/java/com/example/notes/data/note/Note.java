@@ -7,16 +7,22 @@ public class Note implements Parcelable {
     private Integer id;
     private String title;
     private String description;
+    private String important;
 
-    public Note(Integer id, String title, String description) {
+    public Note(Integer id, String title, String description, String important) {
+        this(title, description, important);
         this.id = id;
-        this.title = title;
-        this.description = description;
     }
 
-    public Note(String title, String description) {
+    public Note(String title, String description, String important) {
         this.title = title;
         this.description = description;
+
+        if (important.isEmpty()) {
+            this.important = "Low";
+        } else {
+            this.important = important;
+        }
     }
 
     protected Note(Parcel in) {
@@ -27,6 +33,7 @@ public class Note implements Parcelable {
         }
         title = in.readString();
         description = in.readString();
+        important = in.readString();
     }
 
     @Override
@@ -39,6 +46,7 @@ public class Note implements Parcelable {
         }
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeString(important);
     }
 
     @Override
@@ -80,5 +88,13 @@ public class Note implements Parcelable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImportant() {
+        return important;
+    }
+
+    public void setImportant(String important) {
+        this.important = important;
     }
 }
