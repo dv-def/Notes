@@ -2,10 +2,14 @@
 <resources>
     <dimen name="note_title_text_size">20sp</dimen>
     <dimen name="note_description_text_size">16sp</dimen>
+
     <dimen name="note_item_card_elevation">8dp</dimen>
     <dimen name="note_item_card_corner_radius">8dp</dimen>
+
     <dimen name="note_item_margin">8dp</dimen>
     <dimen name="description_margin">4dp</dimen>
     <dimen name="edit_views_default_margin">8dp</dimen>
-    <dimen name="note_item_important_text_size">14sp</dimen>
+    <dimen name="edit_views_default_margin_double">16dp</dimen>
+
+    <dimen name="note_item_label_text_size">14sp</dimen>
 </resources>

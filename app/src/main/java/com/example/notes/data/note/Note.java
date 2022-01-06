@@ -2,27 +2,31 @@ package com.example.notes.data.note;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.format.DateFormat;
 
 public class Note implements Parcelable {
     private Integer id;
     private String title;
     private String description;
     private String important;
+    private String date;
 
-    public Note(Integer id, String title, String description, String important) {
-        this(title, description, important);
+    public Note(Integer id, String title, String description, String important, String date) {
+        this(title, description, important, date);
         this.id = id;
     }
 
-    public Note(String title, String description, String important) {
+    public Note(String title, String description, String important, String date) {
         this.title = title;
         this.description = description;
+        this.date = date;
 
         if (important.isEmpty()) {
-            this.important = "Low";
-        } else {
-            this.important = important;
+            important = "Low";
         }
+
+        this.important = important;
+        this.date = date;
     }
 
     protected Note(Parcel in) {
@@ -34,6 +38,7 @@ public class Note implements Parcelable {
         title = in.readString();
         description = in.readString();
         important = in.readString();
+        date = in.readString();
     }
 
     @Override
@@ -47,6 +52,7 @@ public class Note implements Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(important);
+        dest.writeString(date);
     }
 
     @Override
@@ -96,5 +102,13 @@ public class Note implements Parcelable {
 
     public void setImportant(String important) {
         this.important = important;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
