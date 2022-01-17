@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initListNoteFragment();
+        if (savedInstanceState == null) {
+            initListNoteFragment();
+        }
     }
 
     @Override
