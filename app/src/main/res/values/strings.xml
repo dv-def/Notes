@@ -9,4 +9,7 @@
     <string name="date">Date:</string>
     <string name="select_date">Select Date</string>
     <string name="agree">Agree</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
+    <string name="note_img_view_desc">Note actions</string>
 </resources>

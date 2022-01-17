@@ -61,8 +61,14 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     }
 
     @Override
-    public void onClickNote(Note note) {
-        this.controller.onNoteClicked(note);
+    public void onEditNote(Note note, int position) {
+        controller.onNoteClicked(note);
+    }
+
+    @Override
+    public void onDeleteNote(Note note, int position) {
+        repository.delete(note.getId());
+        adapter.deleteItem(position);
     }
 
     public interface NoteListController {

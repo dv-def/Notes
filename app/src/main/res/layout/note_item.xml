@@ -6,10 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="@dimen/note_item_card_elevation"
     app:cardCornerRadius="@dimen/note_item_card_corner_radius"
-    android:layout_margin="@dimen/note_item_margin"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?selectableItemBackground">
+    android:layout_margin="@dimen/note_item_margin" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -53,9 +50,23 @@
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/note_item_margin"
             android:textSize="@dimen/note_item_label_text_size"
-            app:layout_constraintTop_toBottomOf="@id/note_description"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/note_important"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/date" />
+
+        <ImageView
+            android:id="@+id/note_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_marginEnd="@dimen/note_item_margin"
+            android:contentDescription="@string/note_img_view_desc"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
