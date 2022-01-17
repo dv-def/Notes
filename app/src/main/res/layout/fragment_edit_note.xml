@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_edit_note_ed_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/title"
         app:boxBackgroundColor="@color/white"
-        android:hint="@string/title">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/note_title_text_size"/>
+            android:textSize="@dimen/note_title_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -23,26 +26,81 @@
         android:id="@+id/fragment_edit_note_ed_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/edit_views_default_margin"
+        android:layout_marginBottom="@dimen/edit_views_default_margin"
         android:hint="@string/description"
         app:boxBackgroundColor="@color/white"
-        android:layout_weight="2"
-        android:layout_marginTop="@dimen/edit_views_default_margin"
-        android:layout_marginBottom="@dimen/edit_views_default_margin">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_ed_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_edit_note_divider">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/note_description_text_size"
-            android:gravity="start|top"/>
+            android:gravity="start|top"
+            android:textSize="@dimen/note_description_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_edit_note_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <TextView
+        android:id="@+id/fragment_edit_note_tv_important_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/important"
+        android:textSize="@dimen/note_item_label_text_size"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/edit_views_default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_divider" />
+
+    <Spinner
+        android:id="@+id/fragment_edit_note_spinner_important"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_views_default_margin"
+        android:entries="@array/important"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_tv_important_label"/>
+
+    <TextView
+        android:id="@+id/fragment_edit_note_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:textColor="@color/black"
+        android:layout_marginEnd="@dimen/edit_views_default_margin"
+        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_divider"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/fragment_edit_note_tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_views_default_margin"
+        android:layout_marginEnd="@dimen/edit_views_default_margin"
+        android:textSize="@dimen/note_description_text_size"
+        android:textColor="@color/purple_700"
+        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_date_label"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_edit_note_btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/edit_views_default_margin"/>
+        android:layout_marginBottom="@dimen/edit_views_default_margin"
+        android:text="@string/save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
