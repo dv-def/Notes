@@ -33,14 +33,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return notes.size();
     }
 
-    public void addItem(int position) {
-        notifyItemInserted(position);
-    }
-
-    public void modifyItem(int position) {
-        notifyItemChanged(position);
-    }
-
     public void deleteItem(int position) {
         notifyItemRemoved(position);
     }
