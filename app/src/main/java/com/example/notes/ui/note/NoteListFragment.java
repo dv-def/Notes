@@ -26,6 +26,10 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     private NoteListController controller;
     private final Repository repository = NoteRepository.getInstance();
 
+    public interface NoteListController {
+        void onNoteClicked(Note note);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         if (context instanceof NoteListController) {
@@ -44,10 +48,8 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         adapter = new NoteAdapter();
-        adapter.setOnClickNoteListener(this);
+        adapter.setNotes(repository.getAll());
 
         rvNotes = view.findViewById(R.id.fragment_note_list_recycler_view);
         rvNotes.setAdapter(adapter);
@@ -57,7 +59,7 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     @Override
     public void onStart() {
         super.onStart();
-        adapter.setNotes(repository.getAll());
+        adapter.setOnClickNoteListener(this);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
         adapter.deleteItem(position);
     }
 
-    public interface NoteListController {
-        void onNoteClicked(Note note);
+    public void updateAdapter() {
+        adapter.setNotes(repository.getAll());
     }
 }

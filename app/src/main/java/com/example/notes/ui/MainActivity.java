@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,13 +22,43 @@ import com.example.notes.ui.note.NoteListFragment;
 public class MainActivity extends AppCompatActivity implements NoteListFragment.NoteListController, EditNoteFragment.EditNoteController {
     public static String NOTE_EXTRA = "NOTE_EXTRA";
 
+    private FragmentManager fragmentManager;
+    private NoteListFragment noteListFragment;
+    private EditNoteFragment editNoteFragment;
+
+    private final String NOTE_LIST_TAG = "NOTE_LIST";
+    private final String EDIT_NOTE_TAG = "EDIT_NOTE_TAG";
+
+    private boolean isLandscape;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentManager = getSupportFragmentManager();
+
         if (savedInstanceState == null) {
-            initListNoteFragment();
+            fragmentManager
+                    .beginTransaction()
+                    .add(R.id.main_activity_note_list_fragment_host, new NoteListFragment())
+                    .commit();
+        }
+
+        isLandscape = (findViewById(R.id.main_activity_edit_note_fragment_host) != null);
+
+        noteListFragment = (NoteListFragment) fragmentManager.findFragmentByTag(NOTE_LIST_TAG);
+        editNoteFragment = (EditNoteFragment) fragmentManager.findFragmentByTag(EDIT_NOTE_TAG);
+
+        if (editNoteFragment != null) {
+            fragmentManager.popBackStack(EDIT_NOTE_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.executePendingTransactions();
+
+            fragmentManager
+                    .beginTransaction()
+                    .replace(getContainerId(), editNoteFragment, EDIT_NOTE_TAG)
+                    .addToBackStack(EDIT_NOTE_TAG)
+                    .commit();
         }
     }
 
@@ -54,51 +85,33 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
 
     @Override
     public void onNoteEdited() {
-        initListNoteFragment();
-    }
+        if (noteListFragment != null) {
+            noteListFragment.updateAdapter();
+        }
 
-    private void initListNoteFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_activity_note_list_fragment_host, new NoteListFragment())
-                .commit();
+        fragmentManager
+                .popBackStack(EDIT_NOTE_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private void initEditNoteFragment(@Nullable Note note) {
-        EditNoteFragment fragment;
-        if (note != null) {
-            fragment = EditNoteFragment.getInstance(note);
-        } else {
-            fragment = new EditNoteFragment();
+        if (editNoteFragment == null) {
+            editNoteFragment = EditNoteFragment.getInstance(note);
         }
 
-        int containerId;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            FrameLayout noteEditLayout = findViewById(R.id.main_activity_edit_note_fragment_host);
-            noteEditLayout.setVisibility(View.VISIBLE);
-
-            FrameLayout noteListLayout = findViewById(R.id.main_activity_note_list_fragment_host);
-            noteListLayout.getLayoutParams().width = 0;
-
-            containerId = R.id.main_activity_edit_note_fragment_host;
-        } else {
-            containerId = R.id.main_activity_note_list_fragment_host;
+        if (!editNoteFragment.isVisible()) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(getContainerId(), editNoteFragment, EDIT_NOTE_TAG)
+                    .addToBackStack(EDIT_NOTE_TAG)
+                    .commit();
         }
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(containerId, fragment)
-                .addToBackStack(null)
-                .commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        FragmentManager manager = getSupportFragmentManager();
-        if (manager.findFragmentById(R.id.main_activity_edit_note_fragment_host) == null) {
-            FrameLayout noteListLayout = findViewById(R.id.main_activity_note_list_fragment_host);
-            noteListLayout.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+    private int getContainerId() {
+        if (isLandscape) {
+            return R.id.main_activity_edit_note_fragment_host;
         }
+
+        return R.id.main_activity_note_list_fragment_host;
     }
 }
