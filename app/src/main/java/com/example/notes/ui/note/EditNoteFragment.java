@@ -43,8 +43,15 @@ public class EditNoteFragment extends Fragment {
     private Repository repository = NoteRepository.getInstance();
     private Note note;
 
+    public interface EditNoteController {
+        void onNoteEdited();
+    }
+
     public static EditNoteFragment getInstance(Note note) {
         Bundle args = new Bundle();
+        if (note == null) {
+            note = new Note("", "", "", "");
+        }
         args.putParcelable(MainActivity.NOTE_EXTRA, note);
 
         EditNoteFragment fragment = new EditNoteFragment();
@@ -78,7 +85,6 @@ public class EditNoteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         edTitle = view.findViewById(R.id.fragment_edit_note_ed_title);
         edDescription = view.findViewById(R.id.fragment_edit_note_ed_description);
         spinnerImportant = view.findViewById(R.id.fragment_edit_note_spinner_important);
@@ -100,17 +106,13 @@ public class EditNoteFragment extends Fragment {
         tvDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
 
-            DatePickerDialog dialog = new DatePickerDialog(requireContext(), R.style.DatePicker, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    Calendar newDate = Calendar.getInstance();
-                    newDate.set(year, month, day);
-
-                    String date = String.valueOf(DateFormat.format("dd-MM-yyyy", newDate.getTime()));
-                    tvDate.setText(date);
-                    note.setDate(date);
-                }
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            DatePickerDialog dialog = new DatePickerDialog(
+                    requireContext(),
+                    R.style.DatePicker,
+                    onDateSetListener(),
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
 
             dialog.show();
         });
@@ -142,7 +144,14 @@ public class EditNoteFragment extends Fragment {
         });
     }
 
-    public interface EditNoteController {
-        void onNoteEdited();
+    private DatePickerDialog.OnDateSetListener onDateSetListener() {
+        return (datePicker, year, month, day) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, month, day);
+
+            String date = String.valueOf(DateFormat.format("dd-MM-yyyy", newDate.getTime()));
+            tvDate.setText(date);
+            note.setDate(date);
+        };
     }
 }
