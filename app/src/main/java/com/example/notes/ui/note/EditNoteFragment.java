@@ -42,19 +42,6 @@ public class EditNoteFragment extends Fragment {
         void onNoteEdited();
     }
 
-    public static EditNoteFragment getInstance(Note note) {
-        Bundle args = new Bundle();
-        if (note == null) {
-            note = new Note("", "", "", "");
-        }
-        args.putParcelable(MainActivity.NOTE_EXTRA, note);
-
-        EditNoteFragment fragment = new EditNoteFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         if (context instanceof EditNoteController) {
@@ -69,7 +56,9 @@ public class EditNoteFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(MainActivity.NOTE_EXTRA)) {
+        if (args != null
+                && args.containsKey(MainActivity.NOTE_EXTRA)
+                && args.getParcelable(MainActivity.NOTE_EXTRA) != null) {
             note = (Note) args.getParcelable(MainActivity.NOTE_EXTRA);
         } else {
             note = new Note("", "", "", "");

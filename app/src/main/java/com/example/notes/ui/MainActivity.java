@@ -3,16 +3,11 @@ package com.example.notes.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
@@ -41,13 +36,12 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
         if (savedInstanceState == null) {
             fragmentManager
                     .beginTransaction()
-                    .add(R.id.main_activity_note_list_fragment_host, new NoteListFragment())
+                    .add(R.id.main_activity_note_list_fragment_host, new NoteListFragment(), NOTE_LIST_TAG)
                     .commit();
         }
 
         isLandscape = (findViewById(R.id.main_activity_edit_note_fragment_host) != null);
 
-        noteListFragment = (NoteListFragment) fragmentManager.findFragmentByTag(NOTE_LIST_TAG);
         editNoteFragment = (EditNoteFragment) fragmentManager.findFragmentByTag(EDIT_NOTE_TAG);
 
         if (editNoteFragment != null) {
@@ -79,13 +73,14 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
     }
 
     @Override
-    public void onNoteClicked(Note note) {
+    public void modifyNote(Note note) {
         initEditNoteFragment(note);
     }
 
     @Override
     public void onNoteEdited() {
-        if (noteListFragment != null) {
+        if (isLandscape) {
+            noteListFragment = (NoteListFragment) fragmentManager.findFragmentByTag(NOTE_LIST_TAG);
             noteListFragment.updateAdapter();
         }
 
@@ -95,8 +90,13 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
 
     private void initEditNoteFragment(@Nullable Note note) {
         if (editNoteFragment == null) {
-            editNoteFragment = EditNoteFragment.getInstance(note);
+            editNoteFragment = new EditNoteFragment();
         }
+
+        Bundle args = new Bundle();
+        args.putParcelable(NOTE_EXTRA, note);
+
+        editNoteFragment.setArguments(args);
 
         if (!editNoteFragment.isVisible()) {
             fragmentManager
