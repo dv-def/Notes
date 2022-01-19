@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
+import com.example.notes.ui.app.ExitDialogFragment;
 import com.example.notes.ui.note.EditNoteFragment;
 import com.example.notes.ui.note.NoteListFragment;
 
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
 
     private final String NOTE_LIST_TAG = "NOTE_LIST";
     private final String EDIT_NOTE_TAG = "EDIT_NOTE_TAG";
+
+    private final String EXIT_APP_TAG = "EXIT_APP_TAG";
 
     private boolean isLandscape;
 
@@ -86,6 +89,16 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
 
         fragmentManager
                 .popBackStack(EDIT_NOTE_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            ExitDialogFragment exitDialogFragment = new ExitDialogFragment();
+            exitDialogFragment.show(getSupportFragmentManager(), EXIT_APP_TAG);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void initEditNoteFragment(@Nullable Note note) {
