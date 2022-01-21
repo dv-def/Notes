@@ -2,22 +2,17 @@ package com.example.notes.ui.note;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.notes.R;
@@ -43,14 +38,8 @@ public class EditNoteFragment extends Fragment {
     private Repository repository = NoteRepository.getInstance();
     private Note note;
 
-    public static EditNoteFragment getInstance(Note note) {
-        Bundle args = new Bundle();
-        args.putParcelable(MainActivity.NOTE_EXTRA, note);
-
-        EditNoteFragment fragment = new EditNoteFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public interface EditNoteController {
+        void onNoteEdited();
     }
 
     @Override
@@ -67,7 +56,9 @@ public class EditNoteFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(MainActivity.NOTE_EXTRA)) {
+        if (args != null
+                && args.containsKey(MainActivity.NOTE_EXTRA)
+                && args.getParcelable(MainActivity.NOTE_EXTRA) != null) {
             note = (Note) args.getParcelable(MainActivity.NOTE_EXTRA);
         } else {
             note = new Note("", "", "", "");
@@ -78,7 +69,6 @@ public class EditNoteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         edTitle = view.findViewById(R.id.fragment_edit_note_ed_title);
         edDescription = view.findViewById(R.id.fragment_edit_note_ed_description);
         spinnerImportant = view.findViewById(R.id.fragment_edit_note_spinner_important);
@@ -100,17 +90,13 @@ public class EditNoteFragment extends Fragment {
         tvDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
 
-            DatePickerDialog dialog = new DatePickerDialog(requireContext(), R.style.DatePicker, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    Calendar newDate = Calendar.getInstance();
-                    newDate.set(year, month, day);
-
-                    String date = String.valueOf(DateFormat.format("dd-MM-yyyy", newDate.getTime()));
-                    tvDate.setText(date);
-                    note.setDate(date);
-                }
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            DatePickerDialog dialog = new DatePickerDialog(
+                    requireContext(),
+                    R.style.DatePicker,
+                    onDateSetListener(),
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
 
             dialog.show();
         });
@@ -142,7 +128,14 @@ public class EditNoteFragment extends Fragment {
         });
     }
 
-    public interface EditNoteController {
-        void onNoteEdited();
+    private DatePickerDialog.OnDateSetListener onDateSetListener() {
+        return (datePicker, year, month, day) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, month, day);
+
+            String date = String.valueOf(DateFormat.format("dd-MM-yyyy", newDate.getTime()));
+            tvDate.setText(date);
+            note.setDate(date);
+        };
     }
 }

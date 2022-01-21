@@ -48,7 +48,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     }
 
     public interface OnClickNoteListener {
-        void onEditNote(Note note, int position);
+        void onModifyNote(Note note, int position);
         void onDeleteNote(Note note, int position);
     }
 }

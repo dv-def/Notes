@@ -57,7 +57,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements PopupMenu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.note_menu_modify:
-                onClickNoteListener.onEditNote(this.note, getAdapterPosition());
+                onClickNoteListener.onModifyNote(this.note, getAdapterPosition());
                 return true;
 
             case R.id.note_menu_delete:

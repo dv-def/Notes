@@ -6,7 +6,7 @@
 
     <FrameLayout
         android:id="@+id/main_activity_note_list_fragment_host"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,7 +17,6 @@
         android:id="@+id/main_activity_edit_note_fragment_host"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/main_activity_note_list_fragment_host"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
