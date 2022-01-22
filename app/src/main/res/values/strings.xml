@@ -17,4 +17,9 @@
     <string name="yes">Yes</string>
     <string name="bye">Bye bye</string>
     <string name="warning">Warning</string>
+    <string name="about">About</string>
+    <string name="note_app">Note Application\nwith in memory storage</string>
+    <string name="open_drawer">drawer_open</string>
+    <string name="close_drawer">drawer_close</string>
+    <string name="about_text">Note Application. Created in 2022</string>
 </resources>

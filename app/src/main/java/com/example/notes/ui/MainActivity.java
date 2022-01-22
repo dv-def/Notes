@@ -1,16 +1,21 @@
 package com.example.notes.ui;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
+import com.example.notes.ui.app.AboutFragment;
 import com.example.notes.ui.app.ExitDialogFragment;
 import com.example.notes.ui.note.EditNoteFragment;
 import com.example.notes.ui.note.NoteListFragment;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NoteListFragment.NoteListController, EditNoteFragment.EditNoteController {
     public static String NOTE_EXTRA = "NOTE_EXTRA";
@@ -25,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
     private final String EXIT_APP_TAG = "EXIT_APP_TAG";
 
     private boolean isLandscape;
+
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,36 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
                     .addToBackStack(EDIT_NOTE_TAG)
                     .commit();
         }
+
+        Toolbar toolbar = findViewById(R.id.main_activity_toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.main_activity_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.open_drawer, R.string.close_drawer
+        );
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.main_activity_navigation_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+
+            if (menuItem.getItemId() == R.id.menu_drawer_about_item) {
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_activity_note_list_fragment_host, new AboutFragment())
+                        .addToBackStack(NOTE_LIST_TAG)
+                        .commit();
+
+                drawerLayout.close();
+
+                return true;
+            }
+
+            return false;
+        });
     }
 
     @Override
@@ -74,11 +111,15 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
 
     @Override
     public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() == 0) {
-            ExitDialogFragment exitDialogFragment = new ExitDialogFragment();
-            exitDialogFragment.show(getSupportFragmentManager(), EXIT_APP_TAG);
+        if (drawerLayout.isOpen()) {
+            drawerLayout.close();
         } else {
-            super.onBackPressed();
+            if (fragmentManager.getBackStackEntryCount() == 0) {
+                ExitDialogFragment exitDialogFragment = new ExitDialogFragment();
+                exitDialogFragment.show(getSupportFragmentManager(), EXIT_APP_TAG);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
