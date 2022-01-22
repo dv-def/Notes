@@ -3,6 +3,9 @@ package com.example.notes.ui.note;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,6 +46,7 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_note_list, container, false);
     }
 
@@ -60,6 +64,22 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     public void onStart() {
         super.onStart();
         adapter.setNotes(repository.getAll());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        requireActivity().getMenuInflater().inflate(R.menu.menu_note_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.item_add) {
+            controller.modifyNote(null);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -60,22 +60,6 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.item_add) {
-            initEditNoteFragment(null);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public void modifyNote(Note note) {
         initEditNoteFragment(note);
     }
