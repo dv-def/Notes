@@ -111,4 +111,15 @@ public class Note implements Parcelable {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", important='" + important + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

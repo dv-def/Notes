@@ -1,9 +1,10 @@
 package com.example.notes.data.note;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteRepository implements Repository {
-    private final ArrayList<Note> notes = new ArrayList<>();
+    private final List<Note> notes = new ArrayList<>();
     private int counter;
 
     private static NoteRepository instance;
@@ -61,7 +62,7 @@ public class NoteRepository implements Repository {
     }
 
     @Override
-    public ArrayList<Note> getAll() {
+    public List<Note> getAll() {
         return notes;
     }
 

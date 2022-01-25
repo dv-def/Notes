@@ -3,6 +3,7 @@ package com.example.notes.data.note;
 import com.example.notes.data.note.Note;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Repository {
     int create(Note note);
@@ -13,5 +14,5 @@ public interface Repository {
 
     void delete(int id);
 
-    ArrayList<Note> getAll();
+    List<Note> getAll();
 }
