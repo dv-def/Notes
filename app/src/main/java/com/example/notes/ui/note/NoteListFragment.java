@@ -67,7 +67,6 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     public void onStart() {
         super.onStart();
         adapter.setNotes(repository.getAll());
-        System.out.println(((SharedRepository) repository).watchPrefs());
     }
 
     @Override

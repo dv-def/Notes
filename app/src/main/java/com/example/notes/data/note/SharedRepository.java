@@ -112,8 +112,4 @@ public class SharedRepository implements Repository {
     private void writeInPrefs(String str) {
         preferences.edit().putString(PREFS_KEY, str).apply();
     }
-
-    public String watchPrefs() {
-        return preferences.getString(PREFS_KEY, "");
-    }
 }
