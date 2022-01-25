@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharedRepository implements Repository {
-    private SharedPreferences preferences;
-    private Gson gson;
+    private final SharedPreferences preferences;
+    private final Gson gson;
 
     private final String PREFS_KEY = "NOTE";
     private static SharedRepository instance;
