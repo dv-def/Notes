@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
-import com.example.notes.data.note.NoteRepository;
-import com.example.notes.data.note.Repository;
-import com.example.notes.data.note.SharedRepository;
+import com.example.notes.data.note.repository.Repository;
+import com.example.notes.data.note.repository.SharedRepository;
 import com.example.notes.data.note.adapter.NoteAdapter;
 import com.example.notes.exceptions.FragmentControllerException;
 

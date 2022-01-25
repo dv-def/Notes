@@ -17,9 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
-import com.example.notes.data.note.NoteRepository;
-import com.example.notes.data.note.Repository;
-import com.example.notes.data.note.SharedRepository;
+import com.example.notes.data.note.repository.Repository;
+import com.example.notes.data.note.repository.SharedRepository;
 import com.example.notes.exceptions.FragmentControllerException;
 import com.example.notes.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;

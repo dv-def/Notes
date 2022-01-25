@@ -1,9 +1,10 @@
-package com.example.notes.data.note;
+package com.example.notes.data.note.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.notes.data.note.Note;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
