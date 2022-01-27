@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
-import com.example.notes.data.note.NoteRepository;
-import com.example.notes.data.note.Repository;
+import com.example.notes.data.note.repository.Repository;
+import com.example.notes.data.note.repository.SharedRepository;
 import com.example.notes.data.note.adapter.NoteAdapter;
 import com.example.notes.exceptions.FragmentControllerException;
 
@@ -27,7 +27,7 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     private NoteAdapter adapter;
 
     private NoteListController controller;
-    private final Repository repository = NoteRepository.getInstance();
+    private Repository repository;
 
     public interface NoteListController {
         void modifyNote(Note note);
@@ -38,6 +38,7 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
         if (context instanceof NoteListController) {
             super.onAttach(context);
             controller = (NoteListController) context;
+            repository = SharedRepository.getInstance(context);
         } else {
             throw new FragmentControllerException("Context must implement NoteListController");
         }

@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.notes.R;
 import com.example.notes.data.note.Note;
-import com.example.notes.data.note.NoteRepository;
-import com.example.notes.data.note.Repository;
+import com.example.notes.data.note.repository.Repository;
+import com.example.notes.data.note.repository.SharedRepository;
 import com.example.notes.exceptions.FragmentControllerException;
 import com.example.notes.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
@@ -35,7 +35,7 @@ public class EditNoteFragment extends Fragment {
 
     private EditNoteController controller;
 
-    private Repository repository = NoteRepository.getInstance();
+    private Repository repository;
     private Note note;
 
     public interface EditNoteController {
@@ -47,6 +47,7 @@ public class EditNoteFragment extends Fragment {
         if (context instanceof EditNoteController) {
             super.onAttach(context);
             controller = (EditNoteController) context;
+            repository = SharedRepository.getInstance(context);
         } else {
             throw new FragmentControllerException("Context must implement EditNoteController");
         }

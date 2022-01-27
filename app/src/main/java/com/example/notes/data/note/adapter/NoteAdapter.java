@@ -11,6 +11,7 @@ import com.example.notes.R;
 import com.example.notes.data.note.Note;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     private final ArrayList<Note> notes = new ArrayList<>();
@@ -37,7 +38,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         notifyItemRemoved(position);
     }
 
-    public void setNotes(ArrayList<Note> newNotes) {
+    public void setNotes(List<Note> newNotes) {
         this.notes.clear();
         this.notes.addAll(newNotes);
         notifyDataSetChanged();
