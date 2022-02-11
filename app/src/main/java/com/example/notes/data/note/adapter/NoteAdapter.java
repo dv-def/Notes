@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
-    private final ArrayList<Note> notes = new ArrayList<>();
+    private ArrayList<Note> notes = new ArrayList<>();
     private OnClickNoteListener onClickNoteListener;
 
     @NonNull
@@ -35,6 +35,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     }
 
     public void deleteItem(int position) {
+        notes.remove(position);
         notifyItemRemoved(position);
     }
 
@@ -46,6 +47,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     public void setOnClickNoteListener(OnClickNoteListener onClickNoteListener) {
         this.onClickNoteListener = onClickNoteListener;
+    }
+
+    public void removeDataSet() {
+        notes = null;
     }
 
     public interface OnClickNoteListener {

@@ -62,6 +62,12 @@ public class NoteListFragment extends Fragment implements NoteAdapter.OnClickNot
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        adapter.removeDataSet();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         adapter.setNotes(repository.getAll());
