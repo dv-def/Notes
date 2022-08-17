@@ -1,106 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_edit_note_ed_title"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/til_note_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/title"
-        app:boxBackgroundColor="@color/white"
+        android:layout_margin="@dimen/margin_common"
+        android:hint="@string/hint_note_title"
+        app:errorEnabled="true"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_note_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/note_title_text_size" />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_edit_note_ed_description"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/til_note_description"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/edit_views_default_margin"
-        android:layout_marginBottom="@dimen/edit_views_default_margin"
-        android:hint="@string/description"
-        app:boxBackgroundColor="@color/white"
+        android:layout_margin="@dimen/margin_common"
+        android:hint="@string/hint_note_description"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_ed_title"
+        app:layout_constraintTop_toBottomOf="@id/til_note_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_edit_note_divider">
+        app:layout_constraintBottom_toTopOf="@id/btn_save_note">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_note_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="start|top"
-            android:textSize="@dimen/note_description_text_size" />
+            android:gravity="start|top"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragment_edit_note_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <TextView
-        android:id="@+id/fragment_edit_note_tv_important_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/important"
-        android:textSize="@dimen/note_item_label_text_size"
-        android:textColor="@color/black"
-        android:layout_marginStart="@dimen/edit_views_default_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_divider" />
-
-    <Spinner
-        android:id="@+id/fragment_edit_note_spinner_important"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/edit_views_default_margin"
-        android:entries="@array/important"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_tv_important_label"/>
-
-    <TextView
-        android:id="@+id/fragment_edit_note_date_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date"
-        android:textColor="@color/black"
-        android:layout_marginEnd="@dimen/edit_views_default_margin"
-        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_divider"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/fragment_edit_note_tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/edit_views_default_margin"
-        android:layout_marginEnd="@dimen/edit_views_default_margin"
-        android:textSize="@dimen/note_description_text_size"
-        android:textColor="@color/purple_700"
-        app:layout_constraintTop_toBottomOf="@id/fragment_edit_note_date_label"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/fragment_edit_note_btn_save"
+        android:id="@+id/btn_save_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/edit_views_default_margin"
+        android:layout_margin="@dimen/margin_common"
         android:text="@string/save"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
