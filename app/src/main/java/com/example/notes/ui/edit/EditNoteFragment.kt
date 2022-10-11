@@ -31,8 +31,8 @@ class EditNoteFragment : Fragment(), EditNoteView {
 
         note = arguments?.getParcelable(ARGUMENT_NOTE) as Note?
         note?.let {
-            binding.noteTitle.setText(it.title)
-            binding.noteDescription.setText(it.title)
+            binding.editNoteTitle.setText(it.title)
+            binding.editNoteDescription.setText(it.title)
         }
 
         presenter = EditNotePresenter(app().repository)
@@ -42,8 +42,8 @@ class EditNoteFragment : Fragment(), EditNoteView {
             if (note != null) {
                 note = note!!.copy(
                     id = note!!.id,
-                    title = binding.noteTitle.text.toString(),
-                    description = binding.noteDescription.text.toString()
+                    title = binding.editNoteTitle.text.toString(),
+                    description = binding.editNoteDescription.text.toString()
                 )
                 presenter.updateNote(note!!)
             } else {
@@ -59,11 +59,11 @@ class EditNoteFragment : Fragment(), EditNoteView {
     }
 
     override fun showTitleError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        binding.editNoteTitle.hint = message
     }
 
     override fun showDescriptionError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        binding.editNoteDescription.hint = message
     }
 
     override fun showDataError(message: String) {
@@ -77,8 +77,8 @@ class EditNoteFragment : Fragment(), EditNoteView {
 
     private fun getNote(): Note {
         return Note(
-            title = binding.noteTitle.text.toString(),
-            description = binding.noteDescription.text.toString()
+            title = binding.editNoteTitle.text.toString(),
+            description = binding.editNoteDescription.text.toString()
         )
     }
 
