@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.notes.R
 import com.example.notes.app
 import com.example.notes.databinding.FragmentNotesListBinding
 import com.example.notes.domain.Note
 import com.example.notes.ui.MainActivity
+import com.example.notes.ui.edit.EditNoteFragment
 
 class NotesListFragment : Fragment(), NotesListView {
     private var _binding: FragmentNotesListBinding? = null
@@ -34,12 +36,20 @@ class NotesListFragment : Fragment(), NotesListView {
         presenter.attach(this)
 
         binding.fab.setOnClickListener {
-            (requireActivity() as MainActivity).openEditScreen(null)
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, EditNoteFragment.newInstance(note = null))
+                .addToBackStack(null)
+                .commit()
         }
 
         adapter = NotesAdapter(
             onItemClick = { note ->
-                (requireActivity() as MainActivity).openEditScreen(note)
+                parentFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, EditNoteFragment.newInstance(note = note))
+                    .addToBackStack(null)
+                    .commit()
             },
             onClickDelete = { note, pos ->
                 presenter.onClickDelete(note, pos)
